@@ -1,1 +1,1 @@
-# browser-sudoku
+# ReDoKu - A React.js Sudoku Game
