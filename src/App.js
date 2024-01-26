@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { generateSudokuTable, generatePuzzle } from'./Generator'
 
@@ -10,7 +9,18 @@ function App() {
 
   return (
     <div className="App">
+      <h1>ReDoKu</h1>
+      <h3>- A React.js Sudoku Game -</h3>
+      <p>Select a difficulty:</p>
+      <button>Beginner</button>
+      <button>Easy</button>
+      <button>Normal</button>
+      <button>Hard</button>
+      <button>Expert</button>
       {printSudoku(puzzle)}
+      <button>Check</button>
+      <button>Rules</button>
+      <button>Quit</button>
     </div>
   );
 }
@@ -23,7 +33,7 @@ function printSudoku(puzzle){
       {board.map((row, i) => (
         <div key={i}>
           {row.map((cell, j) => (
-            <span key={j}>{cell} </span>
+            <input type="text" key={j} defaultValue={cell}  className="Puzzle-cell"/>
           ))}
         </div>
       ))}

@@ -39,8 +39,8 @@ export function generatePuzzle(grid, difficulty){
         let isRemoved = false;
         while(isRemoved === false){
             let randomIndex = Math.floor(Math.random() * 81);
-            if(table[Math.floor(randomIndex/9)][randomIndex%9] !== "_"){
-                table[Math.floor(randomIndex/9)][randomIndex%9] = "_";
+            if(table[Math.floor(randomIndex/9)][randomIndex%9] !== ""){
+                table[Math.floor(randomIndex/9)][randomIndex%9] = "";
                 isRemoved = true;
             }
         }
