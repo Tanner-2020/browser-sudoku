@@ -17,20 +17,23 @@ export function generatePuzzle(grid, difficulty){
 
     // Sets number of values to remove for the puzzle table.
     let removedValues = 0;
-    if(difficulty === "beginner"){
+    if(difficulty === "Beginner"){
         removedValues = 18;
     }
-    else if(difficulty === "easy"){
+    else if(difficulty === "Easy"){
         removedValues = 27;
     }
-    else if(difficulty === "normal"){
+    else if(difficulty === "Normal"){
         removedValues = 36;
     }
-    else if(difficulty === "hard"){
+    else if(difficulty === "Hard"){
         removedValues = 45;
     }
-    else{
+    else if(difficulty === "Expert"){
         removedValues = 54;
+    }
+    else{
+        removedValues = 81;
     }
 
     // Randomly removes the desired number of values

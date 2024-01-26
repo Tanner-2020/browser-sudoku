@@ -44,7 +44,7 @@
 }
 
 .Puzzle-grid{
-  border: solid, black, 0.5em;
+  margin-bottom: 1em;
 }
 
 .Puzzle-cell {
