@@ -6,6 +6,7 @@
     margin: 0.5em;
     margin-bottom: 2em;
   }
+  background-color: rgb(224, 247, 255);
 }
 
 .App-logo {
@@ -51,4 +52,50 @@
   width: 3em;
   height: 3em; 
   text-align: center;
+  font-weight: bolder;
+}
+
+button {
+  font-weight: bold;
+  border-radius: 0.75em;
+  transition: 0.25s;
+  background-color: lightblue
+}
+
+button:hover {
+  color: white;
+}
+
+#Beginner-button:hover {
+  background-color: #009945;
+}
+
+#Easy-button:hover {
+  background-color: #6bad00;
+}
+
+#Normal-button:hover {
+  background-color: #a59610;
+}
+
+#Hard-button:hover {
+  background-color: #b18200;
+}
+
+#Expert-button:hover {
+  background-color: #bd3600;
+}
+
+#Check-button:hover, #Rules-button:hover {
+  background-color: rgb(63, 74, 124);
+}
+
+#Quit-button:hover {
+  background-color: rgb(95, 4, 4);
+}
+
+#Rules-panel {
+  visibility: collapse;
+  opacity: 0;
+  transition: 0.25s;
 }
