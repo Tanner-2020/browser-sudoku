@@ -47,7 +47,7 @@ function App() {
         <button id="Quit-button" onClick={() => setDifficulty("")}>Quit</button>
       </div>
       <div className="App" id="Rules-panel">
-        <h2>The rules of sudoku:</h2>
+        <h2>The Rules of Sudoku:</h2>
         <p>The goal of sudoku is simple: Fill the open spaces in the puzzle grid with the correct number.</p>
         <h4>The numbers entered in the grid must fit the required criteria, listed below:</h4>
         <p>Each 3x3 section of the puzzle grid must include the numbers 1 through 9. Each number must appear once.</p>
@@ -63,6 +63,7 @@ function App() {
         <p>Start by trying to fill in the 3x3 sections that contain the most numbers from the start.</p>
         <p>Look for rows or columns where the 3x3 sections have 2 of a number defined. This can narrow down where the third occurrence of that number will appear.</p>
         <p>Focus the number that appears the most in the given squares of the puzzle grid.</p>
+        <button id="Close-button" onClick={() => toggleRules()}>Close</button>
       </div>
     </>
   );

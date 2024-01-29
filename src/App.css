@@ -87,15 +87,30 @@ button:hover {
 }
 
 #Check-button:hover, #Rules-button:hover {
-  background-color: rgb(63, 74, 124);
+  background-color: rgb(18, 28, 76);
 }
 
 #Quit-button:hover {
   background-color: rgb(95, 4, 4);
 }
 
+#Close-button:hover {
+  background-color: rgb(63, 74, 124);
+}
+
 #Rules-panel {
+  position: absolute;
+  top: 0;
+  align-self: center;
+  justify-content: center;
   visibility: collapse;
   opacity: 0;
   transition: 0.25s;
+  background-color: rgba(18, 28, 76, 0.98);
+  border-radius: 10vh;
+  width: 80vw;
+  margin-left: 11vw;
+  margin-top: 10vh;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.8);
 }
