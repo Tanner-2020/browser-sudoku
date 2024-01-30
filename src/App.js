@@ -77,7 +77,8 @@ function printSudoku(puzzle){
       {board.map((row, i) => (
         <div key={i}>
           {row.map((cell, j) => (
-            <input type="text" key={j} defaultValue={cell}  className="Puzzle-cell"/>
+            <input type="text" key={j} defaultValue={cell}  className="Puzzle-cell" disabled={cell !== ''} 
+            style={{backgroundColor: (((j < 3 || j >= 6) && (i < 3 || i >=6)) || (j >= 3 && j <6 && i >=3 && i < 6)) ? 'lightgray' : 'white', fontWeight: (cell !== '') ? 'bolder' : 'normal'}}/>
           ))}
         </div>
       ))}
