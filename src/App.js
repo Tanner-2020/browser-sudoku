@@ -6,7 +6,11 @@ function App() {
   const [diff, setDiff] = useState("");
   const [difficultyText, setDifficultyText] = useState("Select a difficulty:");
   let table = generateSudokuTable();
-  let puzzle = generatePuzzle(table, diff);
+  let puzzle = generatePuzzle(table.slice(), diff);
+  const [userSolution, setUserSolution] = useState(puzzle.slice());
+
+  console.log(table);
+  console.log(puzzle);
 
   function setDifficulty(difficulty){
     if(diff !== "" && difficulty !== "" && diff !== difficulty){
@@ -30,6 +34,45 @@ function App() {
     }
   }
 
+  function updateUserSolution(cell, rowIndex, colIndex, puzzle){
+    console.log(cell)
+    const grid = puzzle;
+    grid[rowIndex][colIndex] = cell;
+    setUserSolution(grid);
+    console.log(userSolution);
+  }
+
+  function printSudoku(puzzle){
+    const board = puzzle;
+    return (
+      <div className="Puzzle-grid">
+        {board.map((row, i) => (
+          <div key={i}>
+            {row.map((cell, j) => (
+              <input type="text" key={j} defaultValue={cell}  className="Puzzle-cell" disabled={cell !== ''} 
+              style={{backgroundColor: (((j < 3 || j >= 6) && (i < 3 || i >=6)) || (j >= 3 && j <6 && i >=3 && i < 6)) ? 'lightgray' : 'white', fontWeight: (cell !== '') ? 'bolder' : 'normal'}}
+              onChange={(e) => updateUserSolution(e.target.value, i, j, userSolution)}/>
+            ))}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  function checkUserInput(table, puzzle, user){
+    let isCorrect = true;
+    for(let i = 0; i < 9; i++){
+      for(let j = 0; j < 9; j++){
+        if(puzzle[i][j] === ''){
+          if(table[i][j] !== user[i][j]){
+            isCorrect = false;
+          }
+        }
+      }
+    }
+    console.log(isCorrect);
+  }
+
   return (
     <>
       <div className="App">
@@ -42,8 +85,8 @@ function App() {
         <button id="Hard-button" onClick={() => setDifficulty("Hard")}>Hard</button>
         <button id="Expert-button" onClick={() => setDifficulty("Expert")}>Expert</button>
         {printSudoku(puzzle)}
-        <button id="Check-button">Check</button> {/* TODO: Create a component to evaluate if a puzzle has been solved successfully */}
-        <button id="Rules-button" onClick={() => toggleRules()}>Rules</button> {/* TODO: Create panel that opens next to the game board that can be closed without disturbing the game */}
+        <button id="Check-button" onClick={() => checkUserInput(table, puzzle, userSolution)}>Check</button> {/* TODO: Create a component to evaluate if a puzzle has been solved successfully */}
+        <button id="Rules-button" onClick={() => toggleRules()}>Rules</button>
         <button id="Quit-button" onClick={() => setDifficulty("")}>Quit</button>
       </div>
       <div className="App" id="Rules-panel">
@@ -66,23 +109,6 @@ function App() {
         <button id="Close-button" onClick={() => toggleRules()}>Close</button>
       </div>
     </>
-  );
-}
-
-function printSudoku(puzzle){
-  const board = puzzle;
-
-  return (
-    <div className="Puzzle-grid">
-      {board.map((row, i) => (
-        <div key={i}>
-          {row.map((cell, j) => (
-            <input type="text" key={j} defaultValue={cell}  className="Puzzle-cell" disabled={cell !== ''} 
-            style={{backgroundColor: (((j < 3 || j >= 6) && (i < 3 || i >=6)) || (j >= 3 && j <6 && i >=3 && i < 6)) ? 'lightgray' : 'white', fontWeight: (cell !== '') ? 'bolder' : 'normal'}}/>
-          ))}
-        </div>
-      ))}
-    </div>
   );
 }
 
