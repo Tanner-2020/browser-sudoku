@@ -109,8 +109,48 @@ button:hover {
   background-color: rgba(18, 28, 76, 0.98);
   border-radius: 10vh;
   width: 80vw;
-  margin-left: 11vw;
+  margin-left: 10vw;
   margin-top: 10vh;
   font-size: 0.9em;
   color: rgba(255, 255, 255, 0.8);
+}
+
+#Success-panel {
+  position: absolute;
+  top: 0;
+  align-self: center;
+  justify-content: center;
+  background-color: rgba(44, 128, 24, 0.98);
+  border-radius: 10vh;
+  width: 40vw;
+  margin-left: 30vw;
+  margin-top: 35vh;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.8);
+  visibility: collapse;
+  opacity: 0;
+  transition: 0.25s;
+  button {
+    background-color: #83da61;
+  }
+}
+
+#Failure-panel {
+  position: absolute;
+  top: 0;
+  align-self: center;
+  justify-content: center;
+  background-color: rgba(173, 36, 36, 0.98);
+  border-radius: 10vh;
+  width: 40vw;
+  margin-left: 30vw;
+  margin-top: 35vh;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.8);
+  visibility: collapse;
+  opacity: 0;
+  transition: 0.25s;
+  button {
+    background-color: #da6161;
+  }
 }

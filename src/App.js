@@ -70,7 +70,7 @@ function App() {
         }
       }
     }
-    console.log(isCorrect);
+    toggleCheck(isCorrect);
   }
 
   return (
@@ -108,6 +108,16 @@ function App() {
         <p>Focus the number that appears the most in the given squares of the puzzle grid.</p>
         <button id="Close-button" onClick={() => toggleRules()}>Close</button>
       </div>
+      <div class="App" id="Success-panel">
+        <h2>Correct!</h2>
+        <p>You have successfully solved the puzzle!</p>
+        <button id="Close-button" onClick={() => toggleCheck(true)}>Close</button>
+      </div>
+      <div class="App" id="Failure-panel">
+        <h2>Incorrect!</h2>
+        <p>The puzzle is not correct!</p>
+        <button id="Close-button" onClick={() => toggleCheck(false)}>Close</button>
+      </div>
     </>
   );
 }
@@ -122,5 +132,31 @@ function toggleRules(){
     document.getElementById("Rules-panel").style.opacity = 0;
   }
 }
+
+function toggleCheck(isCorrect){
+  console.log("Hello");
+  if(isCorrect === true){
+    if(document.getElementById("Success-panel").style.visibility === 'collapse' || document.getElementById("Success-panel").style.visibility === ''){
+      document.getElementById("Success-panel").style.visibility = 'visible';
+      document.getElementById("Success-panel").style.opacity = 1;
+    }
+    else{
+      document.getElementById("Success-panel").style.visibility = 'collapse';
+      document.getElementById("Success-panel").style.opacity = 0;
+    }
+  }
+  else{
+    if(document.getElementById("Failure-panel").style.visibility === 'collapse' || document.getElementById("Failure-panel").style.visibility === ''){
+      document.getElementById("Failure-panel").style.visibility = 'visible';
+      document.getElementById("Failure-panel").style.opacity = 1;
+    }
+    else{
+      document.getElementById("Failure-panel").style.visibility = 'collapse';
+      document.getElementById("Failure-panel").style.opacity = 0;
+    }
+  }
+}
+
+
 
 export default App;
