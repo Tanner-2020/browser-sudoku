@@ -34,7 +34,7 @@ export function generateSudokuTable(difficulty){
     }
 
     // Randomly removes the desired number of values
-    const puzzle = grid.slice(0);
+    let puzzle = grid.map(inner => inner.slice());
     for(let hidden = 0; hidden < removedValues; hidden++){
         let isRemoved = false;
         while(isRemoved === false){

@@ -6,7 +6,7 @@ function App() {
   const [diff, setDiff] = useState("");
   const [difficultyText, setDifficultyText] = useState("Select a difficulty:");
   let puzzle = generateSudokuTable(diff);
-  const [userSolution, setUserSolution] = useState(puzzle[1].slice());
+  const [userSolution, setUserSolution] = useState(puzzle[1].map(inner => inner.slice()));
   console.log(puzzle);
 
   function setDifficulty(difficulty){
@@ -61,7 +61,7 @@ function App() {
     for(let i = 0; i < 9; i++){
       for(let j = 0; j < 9; j++){
         if(puzzle[i][j] === ''){
-          if(table[i][j] !== user[i][j]){
+          if(table[i][j] !== parseInt(user[i][j])){
             isCorrect = false;
           }
         }
