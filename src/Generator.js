@@ -1,6 +1,6 @@
-export function generateSudokuTable(){
+export function generateSudokuTable(difficulty){
 
-    var grid = [[7,2,6,3,5,9,4,1,8],
+    let grid = [[7,2,6,3,5,9,4,1,8],
                 [4,5,8,1,6,7,2,3,9],
                 [9,1,3,8,2,4,7,6,5],
                 [1,6,2,9,7,5,3,8,4],
@@ -10,10 +10,7 @@ export function generateSudokuTable(){
                 [6,8,9,7,3,2,5,4,1],
                 [2,4,1,5,9,8,6,7,3]];
 
-    return grid;
-}
-
-export function generatePuzzle(puzzle, difficulty){
+    console.log(grid);
 
     // Sets number of values to remove for the puzzle table.
     let removedValues = 0;
@@ -37,16 +34,17 @@ export function generatePuzzle(puzzle, difficulty){
     }
 
     // Randomly removes the desired number of values
-    let grid = puzzle.slice();
+    const puzzle = grid.slice(0);
     for(let hidden = 0; hidden < removedValues; hidden++){
         let isRemoved = false;
         while(isRemoved === false){
             let randomIndex = Math.floor(Math.random() * 81);
-            if(grid[Math.floor(randomIndex/9)][randomIndex%9] !== ""){
-                grid[Math.floor(randomIndex/9)][randomIndex%9] = "";
+            if(puzzle[Math.floor(randomIndex/9)][randomIndex%9] !== ""){
+                puzzle[Math.floor(randomIndex/9)][randomIndex%9] = "";
                 isRemoved = true;
             }
         }
     }
-    return grid;
+    console.log(grid);
+    return [grid, puzzle];
 }

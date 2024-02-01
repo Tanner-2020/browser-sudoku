@@ -1,15 +1,12 @@
 import './App.css';
 import { useState } from 'react';
-import { generateSudokuTable, generatePuzzle } from'./Generator'
+import { generateSudokuTable } from'./Generator'
 
 function App() {
   const [diff, setDiff] = useState("");
   const [difficultyText, setDifficultyText] = useState("Select a difficulty:");
-  let table = generateSudokuTable();
-  let puzzle = generatePuzzle(table.slice(), diff);
-  const [userSolution, setUserSolution] = useState(puzzle.slice());
-
-  console.log(table);
+  let puzzle = generateSudokuTable(diff);
+  const [userSolution, setUserSolution] = useState(puzzle[1].slice());
   console.log(puzzle);
 
   function setDifficulty(difficulty){
@@ -43,13 +40,13 @@ function App() {
   }
 
   function printSudoku(puzzle){
-    const board = puzzle;
+    const board = puzzle[1].slice();
     return (
       <div className="Puzzle-grid">
         {board.map((row, i) => (
           <div key={i}>
             {row.map((cell, j) => (
-              <input type="text" key={j} defaultValue={cell}  className="Puzzle-cell" disabled={cell !== ''} 
+              <input type="text" key={j} defaultValue={cell} className="Puzzle-cell" disabled={cell !== ''} 
               style={{backgroundColor: (((j < 3 || j >= 6) && (i < 3 || i >=6)) || (j >= 3 && j <6 && i >=3 && i < 6)) ? 'lightgray' : 'white', fontWeight: (cell !== '') ? 'bolder' : 'normal'}}
               onChange={(e) => updateUserSolution(e.target.value, i, j, userSolution)}/>
             ))}
@@ -85,7 +82,7 @@ function App() {
         <button id="Hard-button" onClick={() => setDifficulty("Hard")}>Hard</button>
         <button id="Expert-button" onClick={() => setDifficulty("Expert")}>Expert</button>
         {printSudoku(puzzle)}
-        <button id="Check-button" onClick={() => checkUserInput(table, puzzle, userSolution)}>Check</button> {/* TODO: Create a component to evaluate if a puzzle has been solved successfully */}
+        <button id="Check-button" onClick={() => checkUserInput(puzzle[0], puzzle[1], userSolution)}>Check</button>
         <button id="Rules-button" onClick={() => toggleRules()}>Rules</button>
         <button id="Quit-button" onClick={() => setDifficulty("")}>Quit</button>
       </div>
@@ -108,12 +105,12 @@ function App() {
         <p>Focus the number that appears the most in the given squares of the puzzle grid.</p>
         <button id="Close-button" onClick={() => toggleRules()}>Close</button>
       </div>
-      <div class="App" id="Success-panel">
+      <div className="App" id="Success-panel">
         <h2>Correct!</h2>
         <p>You have successfully solved the puzzle!</p>
         <button id="Close-button" onClick={() => toggleCheck(true)}>Close</button>
       </div>
-      <div class="App" id="Failure-panel">
+      <div className="App" id="Failure-panel">
         <h2>Incorrect!</h2>
         <p>The puzzle is not correct!</p>
         <button id="Close-button" onClick={() => toggleCheck(false)}>Close</button>
@@ -133,30 +130,27 @@ function toggleRules(){
   }
 }
 
-function toggleCheck(isCorrect){
-  console.log("Hello");
-  if(isCorrect === true){
-    if(document.getElementById("Success-panel").style.visibility === 'collapse' || document.getElementById("Success-panel").style.visibility === ''){
-      document.getElementById("Success-panel").style.visibility = 'visible';
-      document.getElementById("Success-panel").style.opacity = 1;
+  function toggleCheck(isCorrect){
+    if(isCorrect === true){
+      if(document.getElementById("Success-panel").style.visibility === 'collapse' || document.getElementById("Success-panel").style.visibility === ''){
+        document.getElementById("Success-panel").style.visibility = 'visible';
+        document.getElementById("Success-panel").style.opacity = 1;
+      }
+      else{
+        document.getElementById("Success-panel").style.visibility = 'collapse';
+        document.getElementById("Success-panel").style.opacity = 0;
+      }
     }
     else{
-      document.getElementById("Success-panel").style.visibility = 'collapse';
-      document.getElementById("Success-panel").style.opacity = 0;
+      if(document.getElementById("Failure-panel").style.visibility === 'collapse' || document.getElementById("Failure-panel").style.visibility === ''){
+        document.getElementById("Failure-panel").style.visibility = 'visible';
+        document.getElementById("Failure-panel").style.opacity = 1;
+      }
+      else{
+        document.getElementById("Failure-panel").style.visibility = 'collapse';
+        document.getElementById("Failure-panel").style.opacity = 0;
+      }
     }
   }
-  else{
-    if(document.getElementById("Failure-panel").style.visibility === 'collapse' || document.getElementById("Failure-panel").style.visibility === ''){
-      document.getElementById("Failure-panel").style.visibility = 'visible';
-      document.getElementById("Failure-panel").style.opacity = 1;
-    }
-    else{
-      document.getElementById("Failure-panel").style.visibility = 'collapse';
-      document.getElementById("Failure-panel").style.opacity = 0;
-    }
-  }
-}
-
-
 
 export default App;
