@@ -3,11 +3,15 @@ import { useState } from 'react';
 import { generateSudokuTable } from'./Generator'
 
 function App() {
+  const [refresh, setRefresh] = useState(true);
   const [diff, setDiff] = useState("");
   const [difficultyText, setDifficultyText] = useState("Select a difficulty:");
-  let puzzle = generateSudokuTable(diff);
+  const [puzzle, setPuzzle] = useState(generateSudokuTable(diff));
+  if(refresh === true){
+    setPuzzle(generateSudokuTable(diff));
+    setRefresh(false);
+  }
   const [userSolution, setUserSolution] = useState(puzzle[1].map(inner => inner.slice()));
-  console.log(userSolution);
 
   function setDifficulty(difficulty){
     if(diff !== "" && difficulty !== "" && diff !== difficulty){
@@ -21,6 +25,7 @@ function App() {
           }
         }
         setUserSolution(grid);
+        setRefresh(true);
       }
     }
     else if(diff !== "" && difficulty === ""){
@@ -34,27 +39,27 @@ function App() {
           }
         }
         setUserSolution(grid);
+        setRefresh(true);
       }
     }
     else if(diff === "" && difficulty === ""){
       setDifficultyText("Select a difficulty:");
     }
-    else {
+    else if(diff === "" && difficulty !== ""){
+      setRefresh(true);
       setDiff(difficulty);
       setDifficultyText("Current Difficulty: " + difficulty);
     }
   }
 
   function updateUserSolution(cell, rowIndex, colIndex){
-    const grid = userSolution;
+    const grid = userSolution.map(inner => inner.slice());
     grid[rowIndex][colIndex] = cell;
     setUserSolution(grid);
-    console.log(grid);
   }
 
   function printSudoku(puzzle){
     const board = puzzle[1];
-    console.log('Rerendering');
     return (
       <div id="Puzzle-grid">
         {board.map((row, i) => (
@@ -62,7 +67,7 @@ function App() {
             {row.map((cell, j) => (
               <input type="text" key={j} value={cell === '' ? userSolution[i][j] : cell} className="Puzzle-cell" disabled={cell !== ''}
               style={{backgroundColor: (((j < 3 || j >= 6) && (i < 3 || i >=6)) || (j >= 3 && j <6 && i >=3 && i < 6)) ? 'lightgray' : 'white', fontWeight: (cell !== '') ? 'bolder' : 'normal'}}
-              onChange={(e) => updateUserSolution(e.target.value, i, j, userSolution)}/>
+              onChange={(e) => updateUserSolution(e.target.value, i, j, userSolution, e.target)}/>
             ))}
           </div>
         ))}
