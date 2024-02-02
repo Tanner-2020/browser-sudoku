@@ -7,19 +7,33 @@ function App() {
   const [difficultyText, setDifficultyText] = useState("Select a difficulty:");
   let puzzle = generateSudokuTable(diff);
   const [userSolution, setUserSolution] = useState(puzzle[1].map(inner => inner.slice()));
-  console.log(puzzle);
+  console.log(userSolution);
 
   function setDifficulty(difficulty){
     if(diff !== "" && difficulty !== "" && diff !== difficulty){
       if(window.confirm("If you change the difficulty, the current Sudoku puzzle and progress will be lost!")){
         setDiff(difficulty);
         setDifficultyText("Current Difficulty: " + difficulty);
+        let grid = userSolution;
+        for(let i = 0; i < 9; i++){
+          for(let j = 0; j < 9; j++){
+            grid[i][j] = '';
+          }
+        }
+        setUserSolution(grid);
       }
     }
     else if(diff !== "" && difficulty === ""){
       if(window.confirm("Quitting will result in the Sudoku puzzle and all progress being lost!")){
         setDiff(difficulty);
         setDifficultyText("Select a difficulty:");
+        let grid = userSolution;
+        for(let i = 0; i < 9; i++){
+          for(let j = 0; j < 9; j++){
+            grid[i][j] = '';
+          }
+        }
+        setUserSolution(grid);
       }
     }
     else if(diff === "" && difficulty === ""){
@@ -31,22 +45,22 @@ function App() {
     }
   }
 
-  function updateUserSolution(cell, rowIndex, colIndex, puzzle){
-    console.log(cell)
-    const grid = puzzle;
+  function updateUserSolution(cell, rowIndex, colIndex){
+    const grid = userSolution;
     grid[rowIndex][colIndex] = cell;
     setUserSolution(grid);
-    console.log(userSolution);
+    console.log(grid);
   }
 
   function printSudoku(puzzle){
-    const board = puzzle[1].slice();
+    const board = puzzle[1];
+    console.log('Rerendering');
     return (
-      <div className="Puzzle-grid">
+      <div id="Puzzle-grid">
         {board.map((row, i) => (
           <div key={i}>
             {row.map((cell, j) => (
-              <input type="text" key={j} defaultValue={cell} className="Puzzle-cell" disabled={cell !== ''} 
+              <input type="text" key={j} value={cell === '' ? userSolution[i][j] : cell} className="Puzzle-cell" disabled={cell !== ''}
               style={{backgroundColor: (((j < 3 || j >= 6) && (i < 3 || i >=6)) || (j >= 3 && j <6 && i >=3 && i < 6)) ? 'lightgray' : 'white', fontWeight: (cell !== '') ? 'bolder' : 'normal'}}
               onChange={(e) => updateUserSolution(e.target.value, i, j, userSolution)}/>
             ))}

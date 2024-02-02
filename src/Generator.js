@@ -10,8 +10,6 @@ export function generateSudokuTable(difficulty){
                 [6,8,9,7,3,2,5,4,1],
                 [2,4,1,5,9,8,6,7,3]];
 
-    console.log(grid);
-
     // Sets number of values to remove for the puzzle table.
     let removedValues = 0;
     if(difficulty === "Beginner"){
@@ -45,6 +43,5 @@ export function generateSudokuTable(difficulty){
             }
         }
     }
-    console.log(grid);
     return [grid, puzzle];
 }
