@@ -12,4 +12,4 @@ ReDoKu is a web-based Sudoku game developed using React.js.
 - sudokuSolver and isValid functions in generator are modified implementations code by of "mojtaba ramezani" on Stack Overflow.
 - Thanks to "Damzaky" for helping resolve issues with `.slice()` on 2D-arrays.
 - Thanks to "James" on Stack Overflow for help with implementing the user solution saving.
-### Developed by Tanner Hall, 2024
+### Developed by Tanner Hall, Jan. 24 - Feb.6 2024
