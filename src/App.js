@@ -3,17 +3,25 @@ import { useState } from 'react';
 import { generateSudokuTable } from'./Generator'
 
 function App() {
+
+  // Creation of data values using useState.
   const [refresh, setRefresh] = useState(true);
   const [diff, setDiff] = useState("");
   const [difficultyText, setDifficultyText] = useState("Select a difficulty:");
   const [puzzle, setPuzzle] = useState(generateSudokuTable(diff));
+
+  // If the refresh flag is true, generate a new table.
   if(refresh === true){
     setPuzzle(generateSudokuTable(diff));
     setRefresh(false);
   }
+
+  // userSolution starts as a copy of the puzzle with missing places by default.
   const [userSolution, setUserSolution] = useState(puzzle[1].map(inner => inner.slice()));
 
+  // Allows for changes in difficulty by removing additional numbers.
   function setDifficulty(difficulty){
+    // Change between difficulties.
     if(diff !== "" && difficulty !== "" && diff !== difficulty){
       if(window.confirm("If you change the difficulty, the current Sudoku puzzle and progress will be lost!")){
         setDiff(difficulty);
@@ -28,6 +36,7 @@ function App() {
         setRefresh(true);
       }
     }
+    // Quitting an existing board.
     else if(diff !== "" && difficulty === ""){
       if(window.confirm("Quitting will result in the Sudoku puzzle and all progress being lost!")){
         setDiff(difficulty);
@@ -42,9 +51,11 @@ function App() {
         setRefresh(true);
       }
     }
+    // Quitting with no difficulty.
     else if(diff === "" && difficulty === ""){
       setDifficultyText("Select a difficulty:");
     }
+    // Changing difficulty with no current difficulty selected.
     else if(diff === "" && difficulty !== ""){
       setRefresh(true);
       setDiff(difficulty);
@@ -52,12 +63,14 @@ function App() {
     }
   }
 
+  // Updates the userSolution 2D-array upon entry of data into a text box.
   function updateUserSolution(cell, rowIndex, colIndex){
     const grid = userSolution.map(inner => inner.slice());
     grid[rowIndex][colIndex] = cell;
     setUserSolution(grid);
   }
 
+  // Displays tiles of the sudoku board. 
   function printSudoku(puzzle){
     const board = puzzle[1];
     return (
@@ -75,20 +88,7 @@ function App() {
     );
   }
 
-  function checkUserInput(table, puzzle, user){
-    let isCorrect = true;
-    for(let i = 0; i < 9; i++){
-      for(let j = 0; j < 9; j++){
-        if(puzzle[i][j] === ''){
-          if(table[i][j] !== parseInt(user[i][j])){
-            isCorrect = false;
-          }
-        }
-      }
-    }
-    toggleCheck(isCorrect);
-  }
-
+  // Screen elements
   return (
     <>
       <div className="App">
@@ -138,6 +138,23 @@ function App() {
   );
 }
 
+  // Compares values that are empty in the puzzle between the completed grid in memory and the user input.
+  function checkUserInput(table, puzzle, user){
+    let isCorrect = true;
+    for(let i = 0; i < 9; i++){
+      for(let j = 0; j < 9; j++){
+        if(puzzle[i][j] === ''){
+          if(table[i][j] !== parseInt(user[i][j])){
+            isCorrect = false;
+          }
+        }
+      }
+    }
+    toggleCheck(isCorrect);
+  }
+
+// Toggles the visibility of the rules displayed to the user.
+// Controllable with rules button and close button in rules section.
 function toggleRules(){
   if(document.getElementById("Rules-panel").style.visibility === 'collapse' || document.getElementById("Rules-panel").style.visibility === ''){
     document.getElementById("Rules-panel").style.visibility = 'visible';
@@ -149,27 +166,28 @@ function toggleRules(){
   }
 }
 
-  function toggleCheck(isCorrect){
-    if(isCorrect === true){
-      if(document.getElementById("Success-panel").style.visibility === 'collapse' || document.getElementById("Success-panel").style.visibility === ''){
-        document.getElementById("Success-panel").style.visibility = 'visible';
-        document.getElementById("Success-panel").style.opacity = 1;
-      }
-      else{
-        document.getElementById("Success-panel").style.visibility = 'collapse';
-        document.getElementById("Success-panel").style.opacity = 0;
-      }
+// Toggles visibility of correct or incorrect displays based on the given boolean value
+function toggleCheck(isCorrect){
+  if(isCorrect === true){
+    if(document.getElementById("Success-panel").style.visibility === 'collapse' || document.getElementById("Success-panel").style.visibility === ''){
+      document.getElementById("Success-panel").style.visibility = 'visible';
+      document.getElementById("Success-panel").style.opacity = 1;
     }
     else{
-      if(document.getElementById("Failure-panel").style.visibility === 'collapse' || document.getElementById("Failure-panel").style.visibility === ''){
-        document.getElementById("Failure-panel").style.visibility = 'visible';
-        document.getElementById("Failure-panel").style.opacity = 1;
-      }
-      else{
-        document.getElementById("Failure-panel").style.visibility = 'collapse';
-        document.getElementById("Failure-panel").style.opacity = 0;
-      }
+      document.getElementById("Success-panel").style.visibility = 'collapse';
+      document.getElementById("Success-panel").style.opacity = 0;
     }
   }
+  else{
+    if(document.getElementById("Failure-panel").style.visibility === 'collapse' || document.getElementById("Failure-panel").style.visibility === ''){
+      document.getElementById("Failure-panel").style.visibility = 'visible';
+      document.getElementById("Failure-panel").style.opacity = 1;
+    }
+    else{
+      document.getElementById("Failure-panel").style.visibility = 'collapse';
+      document.getElementById("Failure-panel").style.opacity = 0;
+    }
+  }
+}
 
 export default App;

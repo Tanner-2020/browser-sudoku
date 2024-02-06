@@ -1,6 +1,7 @@
 var grid;
 export function generateSudokuTable(difficulty){
 
+    // Initial grid value
     grid = [[0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
@@ -11,9 +12,11 @@ export function generateSudokuTable(difficulty){
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0]];
 
+    // Generate diagonal values of the list
     generateDiagonal();
+
+    // Solve and fill in all other spaces of the diagonal grid.
     sudokuSolver(grid);
-    console.log(grid);
 
     // Sets number of values to remove for the puzzle table.
     let removedValues = 0;
@@ -51,6 +54,7 @@ export function generateSudokuTable(difficulty){
     return [grid, puzzle];
 }
 
+// Fills in the 3x3 sections of the grid with 1-9 in the top left, center, and bottom right.
 function generateDiagonal(){
     for(let i = 0; i < 3; i ++){
         let numList = generateList();
@@ -60,6 +64,7 @@ function generateDiagonal(){
     }
 }
 
+// Randomly shuffles the list of values between 1 and 9.
 function generateList(){
     let list = [1,2,3,4,5,6,7,8,9];
     for(let i = 0; i < 9; i++){
@@ -78,7 +83,7 @@ function isValid(board, row, col, k) {
         const m = 3 * Math.floor(row / 3) + Math.floor(i / 3);
         const n = 3 * Math.floor(col / 3) + i % 3;
         if (board[row][i] === k || board[i][col] === k || board[m][n] === k) {
-          return false;
+            return false;
         }
     }
     return true;
@@ -86,22 +91,22 @@ function isValid(board, row, col, k) {
 
 // Modified off of code by user "mojtaba ramezani" on Stack Overflow
 function sudokuSolver(data) {
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      if (data[i][j] === 0) {
-        for (let k = 1; k <= 9; k++) {
-          if (isValid(data, i, j, k)) {
-            data[i][j] = parseInt(`${k}`);
-          if (sudokuSolver(data)) {
-           return true;
-          } else {
-           data[i][j] = 0;
-          }
-         }
-       }
-       return false;
-     }
-   }
- }
- return true;
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            if (data[i][j] === 0) {
+                for (let k = 1; k <= 9; k++) {
+                    if (isValid(data, i, j, k)) {
+                        data[i][j] = parseInt(`${k}`);
+                        if (sudokuSolver(data)) {
+                            return true;
+                        } else {
+                            data[i][j] = 0;
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+    }
+    return true;
 }

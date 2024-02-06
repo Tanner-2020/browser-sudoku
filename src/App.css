@@ -31,6 +31,12 @@ button:hover {
   color: white;
 }
 
+input:focus {
+  outline: dotted;
+  outline-offset: -0.33em;
+  outline-color: rgb(66, 66, 66);
+}
+
 #Beginner-button:hover {
   background-color: #009945;
 }
